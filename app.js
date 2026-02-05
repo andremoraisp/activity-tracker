@@ -14,6 +14,7 @@ class ActivityMonitor {
     }
 
     init() {
+        this.initLanguage();
         this.loadSettings();
         this.loadHistory();
         this.setupEventListeners();
@@ -25,6 +26,28 @@ class ActivityMonitor {
                 .then(reg => console.log('Service Worker registrado:', reg))
                 .catch(err => console.log('Erro ao registrar Service Worker:', err));
         }
+    }
+
+    initLanguage() {
+        const savedLang = localStorage.getItem('appLanguage') || 'pt-BR';
+        applyTranslations();
+        this.updateLanguageDropdown(savedLang);
+        
+        window.addEventListener('languageChanged', () => {
+            this.renderHistory();
+            this.updateDisplay();
+            this.updateLanguageDropdown(localStorage.getItem('appLanguage'));
+        });
+    }
+
+    updateLanguageDropdown(lang) {
+        document.querySelectorAll('.lang-option').forEach(option => {
+            if (option.dataset.lang === lang) {
+                option.classList.add('active');
+            } else {
+                option.classList.remove('active');
+            }
+        });
     }
 
     setupEventListeners() {
@@ -39,6 +62,31 @@ class ActivityMonitor {
             if (this.notificationsEnabled) {
                 this.requestNotificationPermission();
             }
+        });
+        
+        // Gear icon and language dropdown
+        const gearBtn = document.getElementById('gearBtn');
+        const dropdown = document.getElementById('languageDropdown');
+        
+        gearBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isVisible = dropdown.style.display === 'block';
+            dropdown.style.display = isVisible ? 'none' : 'block';
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!dropdown.contains(e.target) && e.target !== gearBtn) {
+                dropdown.style.display = 'none';
+            }
+        });
+        
+        // Language option buttons
+        document.querySelectorAll('.lang-option').forEach(option => {
+            option.addEventListener('click', () => {
+                changeLanguage(option.dataset.lang);
+                dropdown.style.display = 'none';
+            });
         });
     }
 
@@ -71,7 +119,7 @@ class ActivityMonitor {
         const newInterval = parseInt(document.getElementById('intervalMinutes').value);
 
         if (newInterval < 1 || newInterval > 1440) {
-            alert('Por favor, insira um intervalo entre 1 e 1440 minutos.');
+            alert(t('alert.invalidInterval'));
             return;
         }
 
@@ -89,7 +137,7 @@ class ActivityMonitor {
             this.nextCheckIn = new Date(this.lastCheckIn.getTime() + this.intervalMs);
         }
 
-        this.showSuccessMessage();
+        this.showSuccessMessage(t('alert.settingsSaved'));
     }
 
     checkIn() {
@@ -135,7 +183,7 @@ class ActivityMonitor {
 
         if (!this.nextCheckIn) {
             document.getElementById('timeRemaining').textContent = '--:--';
-            document.getElementById('statusText').textContent = 'Pressione o botão para iniciar';
+            document.getElementById('statusText').textContent = t('status.pressButton');
             document.getElementById('progressFill').style.width = '0%';
             return;
         }
@@ -145,7 +193,7 @@ class ActivityMonitor {
         if (remaining <= 0) {
             document.getElementById('timeRemaining').textContent = '00:00';
             document.getElementById('timeRemaining').classList.add('danger');
-            document.getElementById('statusText').textContent = '⚠️ Check-in atrasado!';
+            document.getElementById('statusText').textContent = t('status.late');
             document.getElementById('progressFill').style.width = '0%';
             return;
         }
@@ -167,14 +215,10 @@ class ActivityMonitor {
         const progress = ((this.intervalMs - remaining) / this.intervalMs) * 100;
         document.getElementById('progressFill').style.width = `${progress}%`;
 
-        if (remaining > 60000) {
-            document.getElementById('statusText').textContent = `Próximo check-in em ${minutes} minuto${minutes !== 1 ? 's' : ''}`;
-        } else {
-            document.getElementById('statusText').textContent = `Próximo check-in em ${seconds} segundo${seconds !== 1 ? 's' : ''}`;
-        }
+        document.getElementById('statusText').textContent = t('status.active');
 
-        if (remaining <= 10000 && this.notificationsEnabled && !this.notificationSent10Sec) {
-            this.sendNotification('Check-in em breve', 'Faltam 10 segundos para o próximo check-in!');
+        if (remaining <= 10000 && remaining > 9000 && this.notificationsEnabled && !this.notificationSent10Sec) {
+            this.sendNotification(t('notif.soon.title'), t('notif.soon.body'));
             this.notificationSent10Sec = true;
         }
 
@@ -204,7 +248,7 @@ class ActivityMonitor {
         const historyList = document.getElementById('historyList');
 
         if (this.history.length === 0) {
-            historyList.innerHTML = '<p class="empty-state">Nenhuma atividade registrada ainda</p>';
+            historyList.innerHTML = '<p class="empty-state">' + t('history.empty') + '</p>';
             return;
         }
 
@@ -213,36 +257,37 @@ class ActivityMonitor {
             let statusText, statusClass;
 
             if (entry.status === 'stopped') {
-                statusText = '■ Interrompido';
+                statusText = t('history.stopped');
                 statusClass = 'stopped';
             } else if (entry.status === 'late') {
-                statusText = '⚠️ Atrasado';
+                statusText = t('history.late');
                 statusClass = 'missed';
             } else {
-                statusText = '✓ No prazo';
+                statusText = t('history.onTime');
                 statusClass = '';
             }
 
             return `
                 <div class="history-item ${statusClass}">
                     <div class="history-item-time">${date.toLocaleString('pt-BR')}</div>
-                    <div class="history-item-status">${statusText} - Intervalo: ${entry.interval} min</div>
+                    <div class="history-item-status">${statusText} - ${t('history.interval')}: ${entry.interval} min</div>
                 </div>
             `;
         }).join('');
     }
 
     clearHistory() {
-        if (confirm('Tem certeza que deseja limpar todo o histórico?')) {
+        if (confirm(t('alert.confirmClear'))) {
             this.history = [];
             localStorage.removeItem('activityHistory');
             this.renderHistory();
+            alert(t('alert.historyCleared'));
         }
     }
 
     exportHistory() {
         if (this.history.length === 0) {
-            alert('Não há histórico para exportar.');
+            alert(t('alert.noRecords'));
             return;
         }
 
@@ -250,7 +295,7 @@ class ActivityMonitor {
             ['Data/Hora', 'Status', 'Intervalo (min)'],
             ...this.history.map(entry => [
                 new Date(entry.timestamp).toLocaleString('pt-BR'),
-                entry.status === 'late' ? 'Atrasado' : 'No prazo',
+                entry.status === 'late' ? t('history.late') : t('history.onTime'),
                 entry.interval
             ])
         ].map(row => row.join(',')).join('\n');
@@ -289,10 +334,10 @@ class ActivityMonitor {
         }
     }
 
-    showSuccessMessage() {
+    showSuccessMessage(message) {
         const btn = document.getElementById('saveSettings');
         const originalText = btn.textContent;
-        btn.textContent = '✓ Salvo!';
+        btn.textContent = message || t('alert.settingsSaved');
         btn.style.background = 'var(--success-color)';
         btn.style.color = 'white';
         btn.style.borderColor = 'var(--success-color)';
@@ -306,7 +351,7 @@ class ActivityMonitor {
     }
 
     stopMonitoring() {
-        if (!confirm('Deseja realmente finalizar a contagem? O timer será parado.')) {
+        if (!confirm(t('alert.confirmStop'))) {
             return;
         }
 
@@ -332,7 +377,7 @@ class ActivityMonitor {
 
         document.getElementById('stopBtn').style.display = 'none';
         document.getElementById('timeRemaining').textContent = '--:--';
-        document.getElementById('statusText').textContent = 'Monitoramento finalizado';
+        document.getElementById('statusText').textContent = t('status.stopped');
         document.getElementById('progressFill').style.width = '0%';
         document.getElementById('timeRemaining').classList.remove('warning', 'danger');
     }
@@ -341,7 +386,7 @@ class ActivityMonitor {
         const startTimeInput = document.getElementById('statsStartTime').value;
 
         if (!startTimeInput) {
-            alert('Por favor, selecione uma data e hora de início.');
+            alert(t('alert.selectStartTime'));
             return;
         }
 
@@ -349,7 +394,7 @@ class ActivityMonitor {
         const now = new Date();
 
         if (startTime > now) {
-            alert('A data de início não pode ser no futuro.');
+            alert(t('alert.futureDate'));
             return;
         }
 
@@ -359,7 +404,7 @@ class ActivityMonitor {
         });
 
         if (filteredHistory.length === 0) {
-            alert('Não há registros de atividade no período selecionado.');
+            alert(t('alert.noRecords'));
             return;
         }
 

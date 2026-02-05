@@ -32,9 +32,13 @@ body {
 }
 
 header {
-    text-align: center;
     color: white;
     margin-bottom: 1rem;
+    position: relative;
+}
+
+.header-content {
+    text-align: center;
 }
 
 header h1 {
@@ -46,6 +50,71 @@ header h1 {
 .subtitle {
     font-size: 0.875rem;
     opacity: 0.9;
+}
+
+.language-selector {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.gear-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.gear-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.gear-icon {
+    font-size: 1.25rem;
+}
+
+.language-dropdown {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    background: var(--card-bg);
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    min-width: 150px;
+    z-index: 1000;
+}
+
+.lang-option {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: none;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    transition: background 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.lang-option:hover {
+    background: var(--bg-color);
+}
+
+.lang-option.active {
+    background: var(--primary-color);
+    color: white;
 }
 
 .status-card,
@@ -238,6 +307,7 @@ header h1 {
     height: 1rem;
     cursor: pointer;
 }
+
 
 .btn-secondary {
     padding: 0.5rem 1rem;
