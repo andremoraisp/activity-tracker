@@ -1,4 +1,4 @@
-const CACHE_NAME = 'activity-monitor-v1.3.0';
+const CACHE_NAME = 'activity-monitor-v1.3.2';
 const urlsToCache = [
   '/',
   '/index.html',

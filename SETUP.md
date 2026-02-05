@@ -1,34 +1,34 @@
-# Configuração Rápida
+# Quick Setup
 
-## Passo 1: Gerar os Ícones PNG
+## Step 1: Generate PNG Icons
 
-Os ícones são necessários para instalar o PWA. Escolha uma das opções:
+Icons are required to install the PWA. Choose one of the options:
 
-### Opção A - Usar o Gerador HTML (Mais Fácil)
-1. Abra o arquivo `create-icons.html` no seu navegador
-2. Clique nos botões para baixar `icon-192.png` e `icon-512.png`
-3. Salve os arquivos na pasta do projeto
+### Option A - Use HTML Generator (Easiest)
+1. Open the `create-icons.html` file in your browser
+2. Click the buttons to download `icon-192.png` and `icon-512.png`
+3. Save the files in the project folder
 
-### Opção B - Converter SVG para PNG
-Use um conversor online ou ferramenta:
+### Option B - Convert SVG to PNG
+Use an online converter or tool:
 - **Online**: https://cloudconvert.com/svg-to-png
-  - Faça upload de `icon-192.svg` e `icon-512.svg`
-  - Baixe os PNGs gerados
+  - Upload `icon-192.svg` and `icon-512.svg`
+  - Download the generated PNGs
   
-- **ImageMagick** (se instalado):
+- **ImageMagick** (if installed):
   ```bash
   magick icon-192.svg icon-192.png
   magick icon-512.svg icon-512.png
   ```
 
-### Opção C - Usar Ícones Temporários
-Os arquivos SVG funcionam em alguns navegadores, mas PNG é recomendado para melhor compatibilidade.
+### Option C - Use Temporary Icons
+SVG files work in some browsers, but PNG is recommended for better compatibility.
 
-## Passo 2: Iniciar o Servidor
+## Step 2: Start the Server
 
-Escolha um método para servir os arquivos:
+Choose a method to serve the files:
 
-### Python (Recomendado)
+### Python (Recommended)
 ```bash
 cd c:\repos\deadmanSwitch
 python -m http.server 8000
@@ -46,44 +46,46 @@ cd c:\repos\deadmanSwitch
 php -S localhost:8000
 ```
 
-## Passo 3: Acessar o Aplicativo
+## Step 3: Access the Application
 
-1. Abra o navegador em: `http://localhost:8000`
-2. O aplicativo deve carregar normalmente
-3. Para instalar como PWA:
-   - **Chrome/Edge**: Clique no ícone de instalação na barra de endereços
-   - **Mobile**: Menu → "Adicionar à tela inicial"
+1. Open your browser at: `http://localhost:8000`
+2. The application should load normally
+3. To install as PWA:
+   - **Chrome/Edge**: Click the installation icon in the address bar
+   - **Mobile**: Menu → "Add to Home Screen"
 
-## Passo 4: Testar
+## Step 4: Test
 
-1. Pressione "Confirmar Presença" para iniciar
-2. Configure o intervalo desejado (ex: 5 minutos para teste)
-3. Ative as notificações se desejar
-4. Observe o timer contando regressivamente
+1. Press "Confirm Presence" to start
+2. Configure the desired interval (e.g., 5 minutes for testing)
+3. Enable notifications if desired
+4. Watch the timer counting down
+5. Test the stop button to halt monitoring
+6. Check statistics with different time ranges
 
-## Solução de Problemas
+## Troubleshooting
 
-### Service Worker não registra
-- Certifique-se de estar usando HTTPS ou localhost
-- Limpe o cache do navegador
-- Verifique o console do navegador (F12)
+### Service Worker not registering
+- Make sure you're using HTTPS or localhost
+- Clear browser cache
+- Check browser console (F12)
 
-### Ícones não aparecem
-- Certifique-se de ter os arquivos PNG (não apenas SVG)
-- Limpe o cache e recarregue a página
-- Verifique se os nomes dos arquivos estão corretos
+### Icons not appearing
+- Make sure you have PNG files (not just SVG)
+- Clear cache and reload the page
+- Verify file names are correct
 
-### Notificações não funcionam
-- Permita notificações quando solicitado
-- Verifique as configurações do navegador
-- Alguns navegadores bloqueiam notificações por padrão
+### Notifications not working
+- Allow notifications when prompted
+- Check browser settings
+- Some browsers block notifications by default
 
-## Deploy em Produção
+## Production Deployment
 
-Para usar em produção, você pode hospedar em:
-- **GitHub Pages**: Gratuito e fácil
-- **Netlify**: Deploy automático
-- **Vercel**: Suporte PWA nativo
-- **Firebase Hosting**: Gratuito com SSL
+To use in production, you can host on:
+- **GitHub Pages**: Free and easy
+- **Netlify**: Automatic deployment
+- **Vercel**: Native PWA support
+- **Firebase Hosting**: Free with SSL
 
-Todos esses serviços oferecem HTTPS automaticamente, necessário para PWAs.
+All these services offer HTTPS automatically, which is required for PWAs.

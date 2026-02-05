@@ -1,34 +1,38 @@
-# Monitor de Atividade - PWA
+# Activity Monitor - PWA
 
-Um aplicativo web progressivo (PWA) para monitorar e registrar atividades periódicas. O usuário deve pressionar um botão a cada intervalo configurável para confirmar sua presença/atividade.
+A Progressive Web App (PWA) for monitoring and recording periodic activities. Users must press a button at configurable intervals to confirm their presence/activity.
 
-## 🚀 Funcionalidades
+> **⚠️ Disclaimer**: This application was developed with the assistance of Artificial Intelligence (AI). Users should verify functionality for their specific use cases.
 
-- ✅ **Check-in periódico**: Botão para confirmar presença em intervalos configuráveis
-- ⏱️ **Timer visual**: Contador regressivo mostrando tempo restante até próximo check-in
-- ⚙️ **Intervalo configurável**: Defina o tempo entre check-ins (1-1440 minutos)
-- 📊 **Barra de progresso**: Visualização do tempo decorrido
-- 🔔 **Notificações**: Alertas quando o check-in está próximo ou atrasado
-- 📋 **Histórico completo**: Registro de todas as atividades com status
-- 💾 **Armazenamento local**: Dados salvos no navegador
-- 📤 **Exportação**: Exporte o histórico em formato CSV
-- 📱 **Instalável**: Pode ser instalado como app no celular ou desktop
-- 🌐 **Funciona offline**: Service Worker para uso sem internet
+## 🚀 Features
 
-## 📦 Instalação
+- ✅ **Periodic check-in**: Button to confirm presence at configurable intervals
+- ⏱️ **Visual timer**: Countdown showing time remaining until next check-in
+- ⚙️ **Configurable interval**: Set time between check-ins (1-1440 minutes)
+- 📊 **Progress bar**: Visual representation of elapsed time
+- 🔔 **Notifications**: Alerts when check-in is approaching or overdue
+- 📋 **Complete history**: Record of all activities with status
+- 💾 **Local storage**: Data saved in browser
+- 📤 **Export**: Export history in CSV format
+- 📱 **Installable**: Can be installed as an app on mobile or desktop
+- 🌐 **Works offline**: Service Worker for offline usage
+- 🛑 **Stop monitoring**: Stop button to halt activity tracking with history entry
+- 📊 **Activity statistics**: Calculate active/inactive time from a specific date
 
-### Como PWA (Recomendado)
+## 📦 Installation
 
-1. Abra o aplicativo em um navegador moderno (Chrome, Edge, Safari, Firefox)
-2. Procure pelo ícone de instalação na barra de endereços ou menu
-3. Clique em "Instalar" ou "Adicionar à tela inicial"
-4. O app será instalado como aplicativo nativo
+### As PWA (Recommended)
 
-### Servidor Local
+1. Open the application in a modern browser (Chrome, Edge, Safari, Firefox)
+2. Look for the installation icon in the address bar or menu
+3. Click "Install" or "Add to Home Screen"
+4. The app will be installed as a native application
 
-Para testar localmente, você precisa de um servidor HTTP. Escolha uma das opções:
+### Local Server
 
-**Opção 1 - Python:**
+To test locally, you need an HTTP server. Choose one of the options:
+
+**Option 1 - Python:**
 ```bash
 # Python 3
 python -m http.server 8000
@@ -37,92 +41,106 @@ python -m http.server 8000
 python -m SimpleHTTPServer 8000
 ```
 
-**Opção 2 - Node.js (http-server):**
+**Option 2 - Node.js (http-server):**
 ```bash
 npx http-server -p 8000
 ```
 
-**Opção 3 - PHP:**
+**Option 3 - PHP:**
 ```bash
 php -S localhost:8000
 ```
 
-Depois acesse: `http://localhost:8000`
+Then access: `http://localhost:8000`
 
-## 🎯 Como Usar
+## 🎯 How to Use
 
-1. **Primeiro Check-in**: Pressione o botão "Confirmar Presença" para iniciar
-2. **Configure o Intervalo**: Defina quantos minutos entre cada check-in (padrão: 30 min)
-3. **Ative Notificações**: Marque a opção para receber alertas
-4. **Monitore o Timer**: Acompanhe o tempo restante na tela principal
-5. **Check-ins Regulares**: Pressione o botão antes do tempo acabar
-6. **Visualize Histórico**: Veja todos os check-ins realizados
+1. **First Check-in**: Press the "Confirm Presence" button to start
+2. **Configure Interval**: Set how many minutes between each check-in (default: 30 min)
+3. **Enable Notifications**: Check the option to receive alerts
+4. **Monitor Timer**: Track remaining time on the main screen
+5. **Regular Check-ins**: Press the button before time runs out
+6. **View History**: See all completed check-ins
+7. **Stop Monitoring**: Press the stop button to halt tracking (creates a history entry)
+8. **View Statistics**: Calculate active/inactive time from a specific date
 
-## 🎨 Recursos Visuais
+## 🎨 Visual Features
 
-- **Verde**: Check-in realizado no prazo
-- **Amarelo**: Menos de 5 minutos restantes
-- **Vermelho piscando**: Check-in atrasado
-- **Barra de progresso**: Mostra tempo decorrido visualmente
+- **Green**: Check-in completed on time
+- **Yellow**: Less than 5 minutes remaining
+- **Red blinking**: Check-in overdue
+- **Progress bar**: Shows elapsed time visually
+- **Gray**: Stopped/interrupted session
 
-## 📱 Compatibilidade
+## 📱 Compatibility
 
-- ✅ Chrome/Edge (Desktop e Mobile)
-- ✅ Safari (iOS e macOS)
-- ✅ Firefox (Desktop e Mobile)
+- ✅ Chrome/Edge (Desktop and Mobile)
+- ✅ Safari (iOS and macOS)
+- ✅ Firefox (Desktop and Mobile)
 - ✅ Samsung Internet
 - ✅ Opera
 
-## 🔧 Tecnologias
+## 🔧 Technologies
 
 - HTML5
-- CSS3 (Design responsivo)
+- CSS3 (Responsive design)
 - JavaScript (Vanilla)
 - Service Worker (PWA)
 - Web Notifications API
 - LocalStorage API
 
-## 📝 Estrutura de Arquivos
+## 📝 File Structure
 
 ```
 deadmanSwitch/
-├── index.html          # Página principal
-├── styles.css          # Estilos
-├── app.js             # Lógica do aplicativo
-├── manifest.json      # Manifesto PWA
-├── service-worker.js  # Service Worker para cache
-├── icon-192.png       # Ícone 192x192
-├── icon-512.png       # Ícone 512x512
-└── README.md          # Este arquivo
+├── index.html          # Main page
+├── styles.css          # Styles
+├── app.js             # Application logic
+├── manifest.json      # PWA manifest
+├── service-worker.js  # Service Worker for caching
+├── icon-192.png       # Icon 192x192
+├── icon-512.png       # Icon 512x512
+├── README.md          # This file
+└── SETUP.md           # Setup instructions
 ```
 
-## 🔒 Privacidade
+## 🔒 Privacy
 
-Todos os dados são armazenados localmente no seu dispositivo. Nenhuma informação é enviada para servidores externos.
+All data is stored locally on your device. No information is sent to external servers.
 
-## 🎯 Casos de Uso
+## 🎯 Use Cases
 
-- Monitoramento de atividade em trabalho remoto
-- Sistema "dead man's switch" pessoal
-- Lembretes periódicos de tarefas
-- Controle de presença
-- Registro de atividades regulares
+- Activity monitoring for remote work
+- Personal "dead man's switch" system
+- Periodic task reminders
+- Presence control
+- Regular activity logging
+- Accountability tracking
 
-## 🛠️ Personalização
+## 🛠️ Customization
 
-Você pode personalizar:
-- Intervalo de check-in (1 a 1440 minutos)
-- Cores no arquivo `styles.css`
-- Textos e mensagens no `index.html` e `app.js`
-- Ícones (substitua `icon-192.png` e `icon-512.png`)
+You can customize:
+- Check-in interval (1 to 1440 minutes)
+- Colors in `styles.css` file
+- Texts and messages in `index.html` and `app.js`
+- Icons (replace `icon-192.png` and `icon-512.png`)
 
-## ⚠️ Notas Importantes
+## ⚠️ Important Notes
 
-- O timer continua rodando mesmo se você fechar a aba (dados salvos no LocalStorage)
-- Notificações requerem permissão do navegador
-- Para funcionar offline, acesse o app online pelo menos uma vez
-- O histórico é limitado a 100 entradas mais recentes
+- Timer continues running even if you close the tab (data saved in LocalStorage)
+- Notifications require browser permission
+- To work offline, access the app online at least once
+- History is limited to the 100 most recent entries
+- Stop button creates a history entry and halts the timer
+- Statistics calculate actual active time (max interval per check-in)
 
-## 📄 Licença
+## 📊 Statistics Calculation Rules
 
-Livre para uso pessoal e comercial.
+- Each check-in counts for a maximum of the configured interval
+- Early check-ins cut the previous interval to actual elapsed time
+- Stop events count for a maximum of the interval from the previous check-in
+- Time before the first check-in is not counted as active
+
+## 📄 License
+
+Free for personal and commercial use.
