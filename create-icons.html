@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Ícones</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            text-align: center;
+        }
+        canvas {
+            border: 1px solid #ccc;
+            margin: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gerador de Ícones para PWA</h1>
+    <p>Clique nos botões abaixo para baixar os ícones:</p>
+    
+    <div>
+        <canvas id="canvas192" width="192" height="192"></canvas>
+        <canvas id="canvas512" width="512" height="512"></canvas>
+    </div>
+    
+    <div>
+        <button onclick="downloadIcon(192)">Baixar icon-192.png</button>
+        <button onclick="downloadIcon(512)">Baixar icon-512.png</button>
+    </div>
+
+    <script>
+        function createIcon(size) {
+            const canvas = document.getElementById(`canvas${size}`);
+            const ctx = canvas.getContext('2d');
+            
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#667eea');
+            gradient.addColorStop(1, '#764ba2');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, size, size);
+            
+            ctx.fillStyle = 'white';
+            ctx.font = `bold ${size * 0.5}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('🔔', size / 2, size / 2);
+            
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = size * 0.05;
+            ctx.beginPath();
+            ctx.arc(size / 2, size / 2, size * 0.4, 0, Math.PI * 2);
+            ctx.stroke();
+        }
+
+        function downloadIcon(size) {
+            const canvas = document.getElementById(`canvas${size}`);
+            const link = document.createElement('a');
+            link.download = `icon-${size}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        createIcon(192);
+        createIcon(512);
+    </script>
+</body>
+</html>

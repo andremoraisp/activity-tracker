@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#2563eb">
+    <meta name="description" content="Monitor de Atividade - Registre sua presença periodicamente">
+    <title>Monitor de Atividade</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔔 Monitor de Atividade</h1>
+            <p class="subtitle">Pressione o botão para confirmar sua presença</p>
+        </header>
+
+        <main>
+            <div class="status-card">
+                <div class="timer-display">
+                    <div class="time-remaining" id="timeRemaining">--:--</div>
+                    <div class="status-text" id="statusText">Aguardando início</div>
+                </div>
+                
+                <button class="check-in-btn" id="checkInBtn">
+                    <span class="btn-icon">✓</span>
+                    <span class="btn-text">Confirmar Presença</span>
+                </button>
+
+                <button class="stop-btn" id="stopBtn" style="display: none;">
+                    <span class="btn-icon">■</span>
+                    <span class="btn-text">Finalizar Contagem</span>
+                </button>
+
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <div class="settings-card">
+                <h2>⚙️ Configurações</h2>
+                <div class="setting-group">
+                    <label for="intervalMinutes">Intervalo de Check-in (minutos):</label>
+                    <div class="input-group">
+                        <input type="number" id="intervalMinutes" min="1" max="1440" value="30">
+                        <button class="btn-secondary" id="saveSettings">Salvar</button>
+                    </div>
+                </div>
+                <div class="setting-group">
+                    <label>
+                        <input type="checkbox" id="notificationsEnabled">
+                        Ativar notificações
+                    </label>
+                </div>
+            </div>
+
+            <div class="statistics-card">
+                <h2>📊 Estatísticas de Atividade</h2>
+                <div class="stats-input-group">
+                    <label for="statsStartTime">Calcular estatísticas a partir de:</label>
+                    <div class="input-group">
+                        <input type="datetime-local" id="statsStartTime">
+                        <button class="btn-secondary" id="calculateStats">Calcular</button>
+                    </div>
+                </div>
+                <div class="stats-results" id="statsResults">
+                    <div class="stat-item">
+                        <div class="stat-label">Tempo Ativo</div>
+                        <div class="stat-value active" id="activeTime">--</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Tempo Inativo</div>
+                        <div class="stat-value inactive" id="inactiveTime">--</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Total de Check-ins</div>
+                        <div class="stat-value" id="totalCheckins">--</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Check-ins Atrasados</div>
+                        <div class="stat-value warning" id="lateCheckins">--</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Taxa de Pontualidade</div>
+                        <div class="stat-value" id="punctualityRate">--</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="history-card">
+                <h2>📋 Histórico de Atividades</h2>
+                <div class="history-controls">
+                    <button class="btn-secondary" id="clearHistory">Limpar Histórico</button>
+                    <button class="btn-secondary" id="exportHistory">Exportar</button>
+                </div>
+                <div class="history-list" id="historyList">
+                    <p class="empty-state">Nenhuma atividade registrada ainda</p>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Última atualização: <span id="lastUpdate">--</span> | v1.3.0</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
